@@ -1,0 +1,51 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Constants
+WIDTH, HEIGHT = 800, 600
+BAR_WIDTH, BAR_HEIGHT = 100, 10
+BAR_SPEED = 5
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Create the screen
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("BrickBreaker")
+
+# Create the bar
+bar = pygame.Rect(WIDTH // 2 - BAR_WIDTH // 2, HEIGHT - BAR_HEIGHT - 10, BAR_WIDTH, BAR_HEIGHT)
+
+# Main game loop
+clock = pygame.time.Clock()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Get the keys that are currently pressed
+    keys = pygame.key.get_pressed()
+
+    # Move the bar left
+    if keys[pygame.K_LEFT] and bar.left > 0:
+        bar.x -= BAR_SPEED
+
+    # Move the bar right
+    if keys[pygame.K_RIGHT] and bar.right < WIDTH:
+        bar.x += BAR_SPEED
+
+    # Draw everything
+    screen.fill(BLACK)
+    pygame.draw.rect(screen, WHITE, bar)
+
+    # Update the display
+    pygame.display.flip()
+
+    # Cap the frame rate
+    clock.tick(60)
